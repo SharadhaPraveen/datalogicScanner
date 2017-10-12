@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
+
+<framework src="src/android/extras.gradle" custom="true" type="gradleReference"/> <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         id="cordova-plugin-device" version="0.2.3">
     <name>Datalogic Scanner</name>
@@ -18,6 +19,7 @@
         </config-file>
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
          </config-file>
+         <framework src="extras.gradle" custom="true" type="gradleReference"/> 
         <source-file src="src/datalogic.jar" target-dir="libs"/>
         <source-file src="src/DLScanner.java" target-dir="src" />
 
