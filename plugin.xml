@@ -13,7 +13,7 @@
  <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="DLScanner">
-                <param name="android-package" value="com.datalogic.Scanner"/>
+                <param name="android-package" value="com.datalogic.DLScanner"/>
             </feature>
         </config-file>
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
