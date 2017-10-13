@@ -35,7 +35,6 @@ public class DLScanner extends CordovaPlugin {
 										 decoder.stopDecode();
 										 decoder.releaseTrigger ();
 										 decoder.release();
-return true;
 			};
 		});
                decoder.pressTrigger();
@@ -49,7 +48,7 @@ return true;
 	   }
 	 //  String message = "Barcode ";
        //callbackContext.success(message);
-	   //return true;
+	  return true;
     }
 	
     return false;
