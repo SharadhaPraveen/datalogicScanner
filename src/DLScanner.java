@@ -1,33 +1,59 @@
 package com.datalogic;
 
-	
-import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.CallbackContext;
+import android.os.AsyncTask;
+import android.util.Log;
 
+import org.apache.cordova.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/**
-* This class echoes a string called from JavaScript.
-*/
+import com.datalogic.decode.BarcodeManager;
+import com.datalogic.decode.DecodeException;
+import com.datalogic.decode.DecodeResult;
+import com.datalogic.decode.ReadListener;
+import com.datalogic.device.ErrorManager;
+
+import java.util.ArrayList;
+
 public class DLScanner extends CordovaPlugin {
 
-@Override
-public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-    if (action.equals("echo")) {
-        String message = args.getString(0);
-        this.echo(message, callbackContext);
-        return true;
-    }
-    return false;
-}
+    BarcodeManager decoder = null;
+    ReadListener listener = null;
 
-private void echo(String message, CallbackContext callbackContext) {
-    if (message != null && message.length() > 0) {
-        callbackContext.success(message);
-    } else {
-        callbackContext.error("Expected one non-empty string argument.");
+    @Override
+    public boolean execute(String action, JSONArray data, final CallbackContext callbackContext) throws JSONException {
+
+	   
+       if (action.equals("scanBarcode")) {
+		  try{
+        decoder = new BarcodeManager();
+		decoder.addReadListener(new ReadListener(){
+			public void onRead(DecodeResult decodeResult){
+				String message = "Barcode "+decodeResult.getText();
+                                         callbackContext.success(message);
+										 decoder.stopDecode();
+										 decoder.releaseTrigger ();
+										 decoder.release();
+return true;
+			};
+		});
+               decoder.pressTrigger();
+		decoder.startDecode(5000);
+		
+      //  return true;
+	   }catch(Exception e){
+		   
+		    callbackContext.error(e.getMessage());
+		   return true;
+	   }
+	 //  String message = "Barcode ";
+       //callbackContext.success(message);
+	   //return true;
     }
+	
+    return false;
+
+
 }
 }
